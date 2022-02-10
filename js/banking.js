@@ -22,15 +22,26 @@ function updateRotalFild(NewDepositAmount, isAdd) {
         totalBalance.innerText = priviousBlance - NewDepositAmount;
     }
 }
+// 
 document.getElementById('deposit-button').addEventListener('click', function () {
     const NewDepositAmount = getInputValue('deposit-input');
-    updateTotalMoney('total-deposite', NewDepositAmount)
-    // update balance 
-    updateRotalFild(NewDepositAmount, true);
+    if (NewDepositAmount > 0) {
+        updateTotalMoney('total-deposite', NewDepositAmount)
+        // update balance 
+        updateRotalFild(NewDepositAmount, true);
+    }
+    else if (NewDepositAmount < 0) {
+        alert('plz input possitive number')
+    }
 });
 // ballence equation
 document.getElementById('Withdraw-button').addEventListener('click', function () {
     const newWithdrawInput = getInputValue('Withdraw-input');
-    updateTotalMoney('total-withdraw', newWithdrawInput)
-    updateRotalFild(newWithdrawInput, false);
+    if (newWithdrawInput > 0) {
+        updateTotalMoney('total-withdraw', newWithdrawInput)
+        updateRotalFild(newWithdrawInput, false);
+    }
+    else if (newWithdrawInput < 0) {
+        alert('plz input possitive number')
+    }
 });
