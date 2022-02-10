@@ -1,51 +1,36 @@
-document.getElementById('deposit-button').addEventListener('click', function () {
-    // get the amount deposited
-    const depositInput = document.getElementById('deposit-input');
-    const NewDepositAmountText = depositInput.value;
-    const NewDepositAmount = parseFloat(NewDepositAmountText);
-    // console.log(depositAmount);
-
-    const totalDeposite = document.getElementById('total-deposite');
-
-    const priviousDepositeAmountText = totalDeposite.innerText;
-    const priviousDepositeAmount = parseFloat(priviousDepositeAmountText);
-    const newDepositeTotal = priviousDepositeAmount + NewDepositAmount;
-    totalDeposite.innerText = newDepositeTotal;
-
-
-    // update balance 
+function getInputValue(inputId) {
+    const inputValue = document.getElementById(inputId);
+    const newInputValueText = inputValue.value;
+    const NewDepositAmount = parseFloat(newInputValueText);
+    inputValue.value = '';
+    return NewDepositAmount;
+}
+function updateTotalMoney(input, addinput) {
+    const totalWithdraw = document.getElementById(input);
+    const previousTotalWithdrawText = totalWithdraw.innerText;
+    const previousTotalWithdraw = parseFloat(previousTotalWithdrawText);
+    totalWithdraw.innerText = previousTotalWithdraw + addinput;
+}
+function updateRotalFild(NewDepositAmount, isAdd) {
     const totalBalance = document.getElementById('total-balance');
     const priviousBlanceText = totalBalance.innerText;
     const priviousBlance = parseFloat(priviousBlanceText);
-    const newBalance = priviousBlance + NewDepositAmount;
-    totalBalance.innerText = newBalance
-
-
-    depositInput.value = '';
+    if (isAdd == true) {
+        totalBalance.innerText = priviousBlance + NewDepositAmount;
+    }
+    else {
+        totalBalance.innerText = priviousBlance - NewDepositAmount;
+    }
+}
+document.getElementById('deposit-button').addEventListener('click', function () {
+    const NewDepositAmount = getInputValue('deposit-input');
+    updateTotalMoney('total-deposite', NewDepositAmount)
+    // update balance 
+    updateRotalFild(NewDepositAmount, true);
 });
-
-
-
 // ballence equation
 document.getElementById('Withdraw-button').addEventListener('click', function () {
-    const WithdrawInput = document.getElementById('Withdraw-input');
-    const newWithdrawInputText = WithdrawInput.value;
-    const newWithdrawInput = parseFloat(newWithdrawInputText);
-
-
-    const totalWithdraw = document.getElementById('total-withdraw');
-    const previousTotalWithdrawText = totalWithdraw.innerText;
-    const previousTotalWithdraw = parseFloat(previousTotalWithdrawText);
-    const newtotalWithdraw = previousTotalWithdraw + newWithdrawInput;
-    totalWithdraw.innerText = newtotalWithdraw;
-
-
-    const totalBalance = document.getElementById('total-balance');
-    const priviousTotalBalanceText = totalBalance.innerText;
-    const priviousTotalBalance = parseFloat(priviousTotalBalanceText);
-    const newTotalBalance = priviousTotalBalance - newWithdrawInput;
-    totalBalance.innerText = newTotalBalance;
-
-
-    WithdrawInput.value = '';
+    const newWithdrawInput = getInputValue('Withdraw-input');
+    updateTotalMoney('total-withdraw', newWithdrawInput)
+    updateRotalFild(newWithdrawInput, false);
 });
