@@ -11,10 +11,17 @@ function updateTotalMoney(input, addinput) {
     const previousTotalWithdraw = parseFloat(previousTotalWithdrawText);
     totalWithdraw.innerText = previousTotalWithdraw + addinput;
 }
-function updateRotalFild(NewDepositAmount, isAdd) {
+function getCaruntBalance() {
     const totalBalance = document.getElementById('total-balance');
     const priviousBlanceText = totalBalance.innerText;
     const priviousBlance = parseFloat(priviousBlanceText);
+    return priviousBlance;
+}
+
+function updateRotalFild(NewDepositAmount, isAdd) {
+    const totalBalance = document.getElementById('total-balance');
+
+    const priviousBlance = getCaruntBalance();
     if (isAdd == true) {
         totalBalance.innerText = priviousBlance + NewDepositAmount;
     }
@@ -37,7 +44,8 @@ document.getElementById('deposit-button').addEventListener('click', function () 
 // ballence equation
 document.getElementById('Withdraw-button').addEventListener('click', function () {
     const newWithdrawInput = getInputValue('Withdraw-input');
-    if (newWithdrawInput > 0) {
+    const currantBalance = getCaruntBalance();
+    if (newWithdrawInput > 0 && newWithdrawInput <= currantBalance) {
         updateTotalMoney('total-withdraw', newWithdrawInput)
         updateRotalFild(newWithdrawInput, false);
     }
